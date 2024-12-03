@@ -1,17 +1,26 @@
 {
-  "name": "vite-vanilla-library",
-  "version": "0.0.0",
+  "name": "declare-to-call",
   "type": "module",
+  "version": "0.0.1",
   "exports": {
+    "./package.json": "./package.json",
     ".": {
-      "import": "./dist/vite-vanilla-library.js",
-      "require": "./dist/vite-vanilla-library.cjs"
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.cjs"
     }
   },
-  "main": "./dist/vite-vanilla-library.cjs",
-  "module": "./dist/vite-vanilla-library.js",
-  "types": "./dist/vite-vanilla-library.d.ts",
-  "files": ["dist"],
+  "main": "./dist/react.cjs",
+  "module": "./dist/react.js",
+  "types": "./dist/react.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -22,17 +31,40 @@
     "test:coverage": "vitest --coverage",
     "prepare": "husky install"
   },
+  "peerDependencies": {
+    "@types/react": ">=16.8",
+    "react": ">=16.8",
+    "vue": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "types/react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.14.0",
     "@commitlint/cli": "^19.2.2",
     "@commitlint/config-conventional": "^19.2.2",
     "@types/node": "^20.12.7",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-vue": "^5.0.4",
     "@vitest/coverage-v8": "^1.5.0",
+    "antd": "^5.22.3",
     "camelcase": "^8.0.0",
     "changelogen": "^0.5.5",
-    "eslint": "^9.0.0",
+    "element-plus": "^2.7.1",
+    "eslint": "^8.0.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "react-dom": "^18.3.1",
     "typescript": "^5.4.5",
     "vite": "^5.2.9",
     "vite-plugin-dts": "^3.8.3",
