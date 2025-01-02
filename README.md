@@ -1,54 +1,114 @@
-# Vite Vanilla Library Template
+# declare-to-call
 
-Template for creating a library with a fully customized environment.
+让声明式的组件可以通过命令式的方式调用
 
 ## Features
 
-* ✨ Fully customized [eslint](https://eslint.org/) configuration based on the config by [Antfu](https://github.com/antfu/eslint-config)
-* 🧪 Write tests quickly and conveniently with [vitest](https://vitest.dev/)
-* 🤝 Supports [conventional commits](https://www.conventionalcommits.org/)
-* 💅 Generate beautiful changelogs with [changelogen](https://github.com/unjs/changelogen)
-* ♾️ GitHub CI for your build
-* 📢 Issue templates
-* 📝 Pull request template
-* 🤖 Ready configuration for [renovatebot](https://github.com/apps/renovate) with [renovate-config](https://github.com/hywax/renovate-config)
-* 🚀 Library releases with just one command
-
-## Get started
-
-### GitHub Template
-
-This is a template repo. Click the green [Use this template](https://github.com/hywax/vite-vanilla-library-template/generate) button to get started.
-
-### Git Clone
-
-```shell
-git clone https://github.com/hywax/vite-vanilla-library-template.git
-cd vite-vanilla-library-template
-pnpm install
-```
+* ✨ 支持 React 和 Vue
+* 💅 支持多个组件的异步调用
+* 🚀 体积只有 1kb
 
 ## Usage
 
-The template contains the following scripts:
+### 安装
 
-* `dev` - Start the development server
-* `build` - Build for production
-* `release` - Generate changelog and npm publish
-* `lint` - Checks your code for any linting errors
-* `test` - Run all tests
-* `test:watch` - Run all tests with watch mode
-* `test:coverage` - Run all tests with code coverage report
-* `prepare` - Script for setting up husky hooks
+```shell
+npm install declare-to-call
+```
 
-## Used by
+### 在 React 中使用
 
-* [vitepress-yandex-metrika](https://github.com/hywax/vitepress-yandex-metrika)
-* [gotify-client](https://github.com/hywax/gotify-client)
-* [lxc-idmapper](https://github.com/hywax/lxc-idmapper)
+#### Mount Container
+```tsx
+// main.tsx
+import { Mount } from 'declare-to-call'
+import _App from './App.tsx'
 
-If you are using this template, feel free to open a PR to add your project to the list.
+const App = Mount(_App)
+
+createRoot(document.getElementById('react-root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+```
+
+#### 调用组件
+```tsx
+// App.tsx
+import createApi from 'declare-to-call'
+import MyFormDialog from './MyFormDialog.tsx'
+const createMyFormDialog = createApi(MyFormDialog)
+
+export default function App() {
+  const handleClick = async () => {
+    const result = await createMyFormDialog({ title: 'Create My Form Dialog' })
+    console.log('result', result)
+  }
+
+  return <button onClick={handleClick}>click me</button>
+}
+```
+
+#### 使用 Children
+```tsx
+// App.tsx
+export default function App() {
+  const handleClick = async () => {
+    const myProps = { title: 'Create My Form Dialog' }
+    const result = await createMyFormDialog(myProps, () => <div className="foo">bar</div>)
+    console.log('result', result)
+  }
+
+  return <button onClick={handleClick}>click me</button>
+}
+```
+
+### 在 Vue 中使用
+
+#### Mount Container
+```tsx
+// main.ts
+import { Mount } from 'declare-to-call/vue'
+import App from './App.vue'
+
+createApp(Mount(App)).mount('#app')
+```
+
+#### 调用组件
+```html
+// App.vue
+<script setup lang="ts">
+import createApi from 'declare-to-call/vue'
+import MyFormDialog from './MyFormDialog.vue'
+const createMyFormDialog = createApi(MyFormDialog)
+
+async function handleClick() {
+  const result = await createMyFormDialog({ title: 'Create My Form Dialog' })
+  console.log('result', result)
+}
+</script>
+
+<template>
+  <button @click="handleClick">click me</button>
+</template>
+```
+
+#### 使用 Children
+```html
+<script setup lang="ts">
+async function handleClick() {
+  const myProps = { title: 'Create My Form Dialog' }
+  const result = await createMyFormDialog(myProps, (h) => h('div', { class: 'foo' }, 'bar'))
+  console.log('result', result)
+}
+</script>
+
+<template>
+  <button @click="handleClick">click me</button>
+</template>
+```
 
 ## License
 
-This template was created under the [MIT License](LICENSE).
+This library was created under the [MIT License](LICENSE).
