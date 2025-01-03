@@ -16,6 +16,7 @@ class ReactAdaptor implements Adaptor<Hyperscript, RenderNode> {
     if (!this.forceUpdate) {
       throw new Error('[create-api] You should mount MountPoint first')
     }
+
     const emitRender = this.forceUpdate
     const createdItem = {
       key: ++this._uid,

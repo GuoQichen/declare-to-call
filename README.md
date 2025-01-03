@@ -1,22 +1,22 @@
 # declare-to-call
 
-让声明式的组件可以通过命令式的方式调用
+Make declarative components callable in an imperative way
 
 ## Features
 
-* ✨ 支持 React 和 Vue
-* 💅 支持多个组件的异步调用
-* 🚀 体积只有 1kb
+* ✨ Support for React and Vue
+* 💅 Support for asynchronous calls to multiple components
+* 🚀 Only 1kb in size
 
 ## Usage
 
-### 安装
+### Installation
 
 ```shell
 npm install declare-to-call
 ```
 
-### 在 React 中使用
+### Using in React
 
 #### Mount Container
 ```tsx
@@ -33,7 +33,7 @@ createRoot(document.getElementById('react-root')!).render(
 )
 ```
 
-#### 调用组件
+#### Calling Components
 ```tsx
 // App.tsx
 import createApi from 'declare-to-call'
@@ -50,7 +50,7 @@ export default function App() {
 }
 ```
 
-#### 使用 Children
+#### Using Children
 ```tsx
 // App.tsx
 export default function App() {
@@ -64,7 +64,7 @@ export default function App() {
 }
 ```
 
-### 在 Vue 中使用
+### Using in Vue
 
 #### Mount Container
 ```tsx
@@ -75,7 +75,7 @@ import App from './App.vue'
 createApp(Mount(App)).mount('#app')
 ```
 
-#### 调用组件
+#### Calling Components
 ```html
 // App.vue
 <script setup lang="ts">
@@ -94,7 +94,7 @@ async function handleClick() {
 </template>
 ```
 
-#### 使用 Children
+#### Using Children
 ```html
 <script setup lang="ts">
 async function handleClick() {
